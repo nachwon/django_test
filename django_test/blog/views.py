@@ -9,4 +9,16 @@ def blog_index(request):
     context = {
         'posts': posts
     }
-    return render(request, 'blog/post.html', context)
+    return render(request, 'blog/post_list.html', context)
+
+
+def post_detail(request, pk):
+    post = Post.objects.get(pk=pk)
+    context = {
+        'post': post,
+    }
+    return render(request, 'blog/post_detail.html', context)
+
+
+def post_create(request):
+    if request.method == 'POST':
