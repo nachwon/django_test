@@ -1,5 +1,6 @@
+from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from blog.models import Post
 
@@ -22,3 +23,17 @@ def post_detail(request, pk):
 
 def post_create(request):
     if request.method == 'POST':
+        author = User.objects.get(username='nachwon')
+        title = request.POST['title']
+        photo = request.FILES.get('photo')
+
+        content = request.POST['content']
+        Post.objects.create(
+            author=author,
+            title=title,
+            photo=photo,
+            content=content,
+        )
+        return redirect(blog_index)
+    else:
+        return render(request, 'blog/post_create.html')
