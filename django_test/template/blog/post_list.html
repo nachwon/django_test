@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for post in posts %}
-        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-        <form action="{% url 'post_delete' pk=post.pk %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Delete Post">
-        </form>
-    {% endfor %}
-<a href="{% url 'post_create' %}">포스트 생성</a>
+{% for post in posts %}
+<div class="page-header">
+    <h1 class="post-title"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+    <form action="{% url 'post_delete' pk=post.pk %}" method="post">
+    {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Delete Post">
+</form>
+</div>
+
+{% endfor %}
+<a class="btn btn-primary" href="{% url 'post_create' %}">포스트 생성</a>
 {% endblock %}
