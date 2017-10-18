@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -37,3 +39,13 @@ def post_create(request):
         return redirect(blog_index)
     else:
         return render(request, 'blog/post_create.html')
+
+
+def post_delete(request, pk):
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        print(post.photo)
+        if post.photo:
+            os.remove(os.path.join(settings.MEDIA_ROOT, f'{post.photo}'))
+    return redirect(blog_index)
